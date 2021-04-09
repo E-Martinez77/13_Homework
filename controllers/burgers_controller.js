@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 // Import the model (cat.js) to use its database functions.
-const burger = require("../models/burger.js");
+const burger = require("../models/burger");
 
 // Create all our routes and set up logic within those routes where required.
 router.get("/", (req, res) => {
@@ -17,10 +17,14 @@ router.get("/", (req, res) => {
 });
 
 router.post("/api/burger", (req, res) => {
-  burger.create(["name", "sleepy"], [req.body.name, req.body.sleepy], (result) => {
-    // Send back the ID of the new quote
-    res.json({ id: result.insertId });
-  });
+  burger.create(
+    ["name", "devour"],
+    [req.body.name, req.body.devour],
+    (result) => {
+      // Send back the ID of the new quote
+      res.json({ id: result.insertId });
+    }
+  );
 });
 
 router.put("/api/burger/:id", (req, res) => {
@@ -30,7 +34,7 @@ router.put("/api/burger/:id", (req, res) => {
 
   burger.update(
     {
-      sleepy: req.body.sleepy,
+      sleepy: req.body.devour,
     },
     condition,
     (result) => {
