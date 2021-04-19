@@ -1,32 +1,32 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
 // Import the model (cat.js) to use its database functions.
-const cat = require('../models/cat.js');
+const cat = require("../models/cat.js");
 
 // Create all our routes and set up logic within those routes where required.
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   cat.all((data) => {
     const hbsObject = {
       cats: data,
     };
     console.log(hbsObject);
-    res.render('index', hbsObject);
+    res.render("index", hbsObject);
   });
 });
 
-router.post('/api/cats', (req, res) => {
-  cat.create(['name', 'sleepy'], [req.body.name, req.body.sleepy], (result) => {
+router.post("/api/cats", (req, res) => {
+  cat.create(["name", "sleepy"], [req.body.name, req.body.sleepy], (result) => {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
   });
 });
 
-router.put('/api/cats/:id', (req, res) => {
+router.put("/api/cats/:id", (req, res) => {
   const condition = `id = ${req.params.id}`;
 
-  console.log('condition', condition);
+  console.log("condition", condition);
 
   cat.update(
     {
@@ -43,7 +43,7 @@ router.put('/api/cats/:id', (req, res) => {
   );
 });
 
-router.delete('/api/cats/:id', (req, res) => {
+router.delete("/api/cats/:id", (req, res) => {
   const condition = `id = ${req.params.id}`;
 
   cat.delete(condition, (result) => {
